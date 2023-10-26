@@ -5,6 +5,7 @@ import com.app.model.HistorialCliente;
 import com.app.services.JsonResponseComponent;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.util.List;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +33,8 @@ public class HistorialClienteController {
     
     @GetMapping("/getAllWithId/")
     public List<HistorialCliente> getAllWithIdCliente(@RequestParam("id") String id){
-        return historialClienteDao.getAllWithIdCliente(id);
+        ObjectId idCliente = new ObjectId(id);
+        return historialClienteDao.getAllWithIdCliente(idCliente);
     };
     
     @GetMapping("/")
@@ -63,6 +65,5 @@ public class HistorialClienteController {
         }
         return ResponseEntity.ok(jsonResponseComponent.getJsonResponse());
     }
-    
     
 }

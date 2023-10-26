@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface HistorialClienteRepository extends MongoRepository<HistorialCliente, String>{
     
     @Query("{'idCliente': ?0}")
-    List<HistorialCliente> findByClienteId(String idCliente);
+    List<HistorialCliente> findByClienteId(ObjectId idCliente);
     
 }
