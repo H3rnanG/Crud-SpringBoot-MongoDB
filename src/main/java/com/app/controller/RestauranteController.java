@@ -1,10 +1,7 @@
 package com.app.controller;
 
-import com.app.interfaces.ClienteDao;
-import com.app.model.Cliente;
-import com.app.services.JsonResponseComponent;
-import com.fasterxml.jackson.databind.JsonNode;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,60 +13,66 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.interfaces.RestauranteDao;
+import com.app.model.Restaurante;
+
+import com.app.services.JsonResponseComponent;
+import com.fasterxml.jackson.databind.JsonNode;
+
 @RestController
-@RequestMapping("/cliente")
-public class ClienteController {
-    
+@RequestMapping("/restaurante")
+public class RestauranteController {
+
     @Autowired
     private JsonResponseComponent jsonResponseComponent;
-    
+
     @Autowired
-    private ClienteDao clienteDao;
-    
+    private RestauranteDao restauranteDao;
+
     @GetMapping
-    public List<Cliente> getAllClientes(){
-        return clienteDao.getAllClientes();
+    public List<Restaurante> getAllRestaurantes() {
+        return restauranteDao.getAllRestaurantes();
     }
-    
+
     @GetMapping("/")
-    public Cliente getCliente(@RequestParam("id") String id){
-        return clienteDao.getCliente(id);
+    public Restaurante getRestaurante(@RequestParam("id") String id) {
+        return restauranteDao.getRestaurante(id);
     }
-    
+
     @PostMapping("/")
-    public ResponseEntity<JsonNode> addCliente(@RequestBody Cliente cliente) {
+    public ResponseEntity<JsonNode> addRestaurante(@RequestBody Restaurante restaurante) {
         jsonResponseComponent.clearJsonResponse();
         try {
-            clienteDao.addCliente(cliente);
-            jsonResponseComponent.addProperty("message", "Cliente Creado Correctamente.");
+            restauranteDao.addRestaurante(restaurante);
+            jsonResponseComponent.addProperty("message", "Restaurante Creado Correctamente.");
         } catch (Exception e) {
             jsonResponseComponent.addProperty("message", e.getMessage());
         }
         return ResponseEntity.ok(jsonResponseComponent.getJsonResponse());
     }
-    
+
     @PutMapping("/")
-    public ResponseEntity<JsonNode> updateCliente(@RequestBody Cliente cliente) {
+    public ResponseEntity<JsonNode> updateRestaurante(@RequestBody Restaurante restaurante) {
         jsonResponseComponent.clearJsonResponse();
         try {
-            clienteDao.updateCliente(cliente);
-            jsonResponseComponent.addProperty("message", "Cliente Actualizado Correctamente.");
+            restauranteDao.updateRestaurante(restaurante);
+            jsonResponseComponent.addProperty("message", "Restaurante Actualizado Correctamente.");
         } catch (Exception e) {
             jsonResponseComponent.addProperty("message", e.getMessage());
         }
         return ResponseEntity.ok(jsonResponseComponent.getJsonResponse());
     }
-    
+
     @DeleteMapping("/")
-    public ResponseEntity<JsonNode> deleteCliente(@RequestParam("id") String id) {
+    public ResponseEntity<JsonNode> deleteRestaurante(@RequestParam("id") String id) {
         jsonResponseComponent.clearJsonResponse();
         try {
-            clienteDao.deleteCliente(id);
-            jsonResponseComponent.addProperty("message", "Cliente Eliminado Correctamente.");
+            restauranteDao.deleteRestaurante(id);
+            jsonResponseComponent.addProperty("message", "Restaurante Eliminado Correctamente.");
         } catch (Exception e) {
             jsonResponseComponent.addProperty("message", e.getMessage());
         }
         return ResponseEntity.ok(jsonResponseComponent.getJsonResponse());
     }
-    
 }
+

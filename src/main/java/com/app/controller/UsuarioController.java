@@ -1,13 +1,13 @@
 package com.app.controller;
 
-import com.app.interfaces.HistorialClienteDao;
-import com.app.model.HistorialCliente;
+import com.app.interfaces.UsuarioDao;
+import com.app.model.Usuario;
 import com.app.services.JsonResponseComponent;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.util.List;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,37 +17,31 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/historialCliente")
-public class HistorialClienteController {
-
+@RequestMapping("/usuario")
+public class UsuarioController {
+    
     @Autowired
     private JsonResponseComponent jsonResponseComponent;
     
     @Autowired
-    private HistorialClienteDao historialClienteDao;
+    private UsuarioDao clienteDao;
     
     @GetMapping
-    public List<HistorialCliente> getAllHistorialCliente(){
-        return historialClienteDao.getAllHistorialCliente();
-    };
-    
-    @GetMapping("/getAllWithId/")
-    public List<HistorialCliente> getAllWithIdCliente(@RequestParam("id") String id){
-        ObjectId idCliente = new ObjectId(id);
-        return historialClienteDao.getAllWithIdCliente(idCliente);
-    };
+    public List<Usuario> getAllUsuarios(){
+        return clienteDao.getAllUsuarios();
+    }
     
     @GetMapping("/")
-    public HistorialCliente getHistorialCliente(@RequestParam("id") String id){
-        return historialClienteDao.getHistorialCliente(id);
+    public Usuario getCliente(@RequestParam("id") String id){
+        return clienteDao.getUsuario(id);
     }
     
     @PostMapping("/")
-    public ResponseEntity<JsonNode> addCliente(@RequestBody HistorialCliente historialCliente) {
+    public ResponseEntity<JsonNode> addUsuario(@RequestBody Usuario cliente) {
         jsonResponseComponent.clearJsonResponse();
         try {
-            historialClienteDao.addHistorialCliente(historialCliente);
-            jsonResponseComponent.addProperty("message", "Historial Creado Correctamente.");
+            clienteDao.addUsuario(cliente);
+            jsonResponseComponent.addProperty("message", "Usuario Creado Correctamente.");
         } catch (Exception e) {
             jsonResponseComponent.addProperty("message", e.getMessage());
         }
@@ -55,11 +49,23 @@ public class HistorialClienteController {
     }
     
     @PutMapping("/")
-    public ResponseEntity<JsonNode> updateCliente(@RequestBody HistorialCliente historialCliente) {
+    public ResponseEntity<JsonNode> updateUsuario(@RequestBody Usuario cliente) {
         jsonResponseComponent.clearJsonResponse();
         try {
-            historialClienteDao.updateHistorialCliente(historialCliente);
-            jsonResponseComponent.addProperty("message", "Historial Actualizado Correctamente.");
+            clienteDao.updateUsuario(cliente);
+            jsonResponseComponent.addProperty("message", "Usuario Actualizado Correctamente.");
+        } catch (Exception e) {
+            jsonResponseComponent.addProperty("message", e.getMessage());
+        }
+        return ResponseEntity.ok(jsonResponseComponent.getJsonResponse());
+    }
+    
+    @DeleteMapping("/")
+    public ResponseEntity<JsonNode> deleteUsuario(@RequestParam("id") String id) {
+        jsonResponseComponent.clearJsonResponse();
+        try {
+            clienteDao.deleteUsuario(id);
+            jsonResponseComponent.addProperty("message", "Usuario Eliminado Correctamente.");
         } catch (Exception e) {
             jsonResponseComponent.addProperty("message", e.getMessage());
         }

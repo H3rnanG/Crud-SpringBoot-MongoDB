@@ -1,40 +1,40 @@
 package com.app.dao;
 
-import com.app.interfaces.ClienteDao;
-import com.app.model.Cliente;
-import com.app.repository.ClienteRepository;
+import com.app.interfaces.UsuarioDao;
+import com.app.model.Usuario;
+import com.app.repository.UsuarioRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ClienteImpl implements ClienteDao{
+public class UsuarioDaoImpl implements UsuarioDao{
 
     @Autowired
-    private ClienteRepository clienteRepository;
+    private UsuarioRepository clienteRepository;
 
    @Override
-    public List<Cliente> getAllClientes() {
+    public List<Usuario> getAllUsuarios() {
         return clienteRepository.findAll();
     }
 
     @Override
-    public Cliente getCliente(String id) {
+    public Usuario getUsuario(String id) {
         return clienteRepository.findById(id).orElse(null);
     }
 
     @Override
-    public void addCliente(Cliente cliente) {
+    public void addUsuario(Usuario cliente) {
         clienteRepository.save(cliente);
     }
 
     @Override
-    public void updateCliente(Cliente cliente) {
+    public void updateUsuario(Usuario cliente) {
         clienteRepository.save(cliente);
     }
 
     @Override
-    public void deleteCliente(String id) {
+    public void deleteUsuario(String id) {
         clienteRepository.deleteById(id);
     }
     
